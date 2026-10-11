@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "title": "BGE residential rate figures for calculator",
+    "disclaimer": "Illustrative public tariff figures for a Millersville MD EXAMPLE home. NOT Boyd's actual bill. Rates change; verify on bge.com / PSC Md. before any decision.",
+    "region": "BGE service territory · Anne Arundel / Millersville MD",
+    "currency": "USD",
+    "units": "kWh",
+    "compiled_at": "2026-10-11",
+    "sources": [
+      {
+        "id": "opc-bge-2026",
+        "label": "Maryland OPC — BGE page (Oct 2026 snapshot)",
+        "url": "https://opc.maryland.gov/Consumer-Learning/Utility-Rates-and-Basics/BGE",
+        "notes": "Schedule R volumetric distribution, customer charge, EmPOWER, supply + transmission."
+      },
+      {
+        "id": "bge-sch-rl",
+        "label": "BGE P.S.C. Md. E-6 Schedule RL (Rate Year 3 / 2026 delivery)",
+        "url": "https://azure-na-assets.contentstack.com/v3/assets/blt71bfe6e8a1c2d265/blte58f7cf25bd43b09/P3_SCH_RL.pdf",
+        "notes": "Customer charge $12, delivery $0.04830/kWh, TOU rating periods."
+      },
+      {
+        "id": "bge-sos-suppl751",
+        "label": "BGE SOS Supplement filing (May 2026) — generation window Oct 2026–May 2027",
+        "url": "https://www.bge.com/cdn/assets/v3/assets/blt71bfe6e8a1c2d265/blt1a0b1cc4f39d8a37/69fb4e3050f7ae24dd91cb6f/Johnston_Suppl751_ML329738.pdf",
+        "notes": "Schedule R / RL Total Generation and bundled illustrative totals by season."
+      },
+      {
+        "id": "ecm-20260506",
+        "label": "EnergyChoiceMatters summary of BGE SOS filing (May 2026)",
+        "url": "http://www.energychoicematters.com/stories/20260506g.html",
+        "notes": "Schedule R Energy Rate / Total Generation Rate summer vs winter windows."
+      }
+    ]
+  },
+  "example_home": {
+    "label": "EXAMPLE Millersville MD home (not Boyd's real bill)",
+    "sqft": 2400,
+    "monthly_kwh": 1100,
+    "annual_kwh": 13200,
+    "load_kw_avg": 1.5,
+    "load_kw_peak": 6.5,
+    "critical_load_kw": 2.0,
+    "notes": "Rough Anne Arundel single-family EXAMPLE usage for calculator defaults only."
+  },
+  "hardware_examples": {
+    "disclaimer": "Equipment prices are EXAMPLE retail/install ballparks — not quotes, not Boyd's quotes.",
+    "powerwall": {
+      "name": "Tesla Powerwall-class battery (EXAMPLE)",
+      "usable_kwh": 13.5,
+      "continuous_kw": 5.0,
+      "peak_kw": 7.0,
+      "installed_cost_usd_each": 15500,
+      "cost_label": "EXAMPLE",
+      "round_trip_efficiency": 0.90
+    },
+    "solar": {
+      "name": "Residential rooftop PV (EXAMPLE)",
+      "cost_per_watt_usd": 2.75,
+      "cost_label": "EXAMPLE installed $/W before incentives",
+      "capacity_factor_md": 0.145,
+      "annual_kwh_per_kw": 1270,
+      "notes": "~4.0–4.5 peak sun hrs Anne Arundel EXAMPLE; ~1,270 kWh/kW-yr."
+    },
+    "incentives": {
+      "federal_itc_fraction": 0.30,
+      "federal_itc_label": "EXAMPLE federal ITC fraction (verify current law)",
+      "md_srec_usd_per_mwh": 60,
+      "md_srec_label": "EXAMPLE MD SREC ballpark — market varies"
+    }
+  },
+  "plans": [
+    {
+      "id": "schedule_r",
+      "name": "Schedule R — Residential (flat)",
+      "kind": "flat",
+      "verified": true,
+      "customer_charge_usd_month": 10.0,
+      "customer_charge_source": "opc-bge-2026",
+      "delivery_usd_per_kwh": 0.04945,
+      "delivery_source": "opc-bge-2026",
+      "empower_usd_per_kwh": 0.01310,
+      "empower_source": "opc-bge-2026",
+      "seasons": {
+        "summer": {
+          "months": [6, 7, 8, 9],
+          "generation_usd_per_kwh": 0.12519,
+          "generation_label": "Total Generation Rate Jun–Sep 2026 (SOS filing)",
+          "generation_source": "ecm-20260506",
+          "transmission_usd_per_kwh": 0.02322,
+          "transmission_source": "opc-bge-2026",
+          "transmission_note": "OPC Oct 2026 transmission figure reused as EXAMPLE for summer window"
+        },
+        "winter": {
+          "months": [10, 11, 12, 1, 2, 3, 4, 5],
+          "generation_usd_per_kwh": 0.12995,
+          "generation_label": "Total Generation Rate Oct 2026–May 2027 (SOS Suppl.)",
+          "generation_source": "bge-sos-suppl751",
+          "transmission_usd_per_kwh": 0.02322,
+          "transmission_source": "opc-bge-2026"
+        }
+      },
+      "all_in_blended_note": "Approx all-in = delivery + EmPOWER + generation + transmission (+ monthly customer charge amortized)."
+    },
+    {
+      "id": "schedule_rl",
+      "name": "Schedule RL — Residential Optional TOU",
+      "kind": "tou",
+      "verified": true,
+      "customer_charge_usd_month": 12.0,
+      "customer_charge_source": "bge-sch-rl",
+      "delivery_usd_per_kwh": 0.04830,
+      "delivery_source": "bge-sch-rl",
+      "empower_usd_per_kwh": 0.01310,
+      "empower_source": "opc-bge-2026",
+      "empower_note": "EmPOWER from OPC Schedule R snapshot — applied as EXAMPLE to RL",
+      "rating_periods": {
+        "summer": {
+          "months": [6, 7, 8, 9],
+          "on_peak": "Weekdays 10:00–20:00",
+          "intermediate": "Weekdays 07:00–10:00 and 20:00–23:00",
+          "off_peak": "All other hours + weekends + listed holidays",
+          "source": "bge-sch-rl"
+        },
+        "winter": {
+          "months": [10, 11, 12, 1, 2, 3, 4, 5],
+          "on_peak": "Weekdays 07:00–11:00 and 17:00–21:00",
+          "intermediate": "Weekdays 11:00–17:00",
+          "off_peak": "All other hours + weekends + listed holidays",
+          "source": "bge-sch-rl"
+        }
+      },
+      "seasons": {
+        "summer": {
+          "months": [6, 7, 8, 9],
+          "on_peak": {
+            "generation_usd_per_kwh": 0.19975,
+            "transmission_usd_per_kwh": 0.03774,
+            "bundled_illustrative_usd_per_kwh": 0.23749,
+            "source": "bge-sos-suppl751",
+            "label": "Jun–Sep 2026 SOS Suppl. (generation + tx illustrative)"
+          },
+          "intermediate": {
+            "generation_usd_per_kwh": 0.10808,
+            "transmission_usd_per_kwh": 0.01408,
+            "bundled_illustrative_usd_per_kwh": 0.12216,
+            "source": "bge-sos-suppl751"
+          },
+          "off_peak": {
+            "generation_usd_per_kwh": 0.08041,
+            "transmission_usd_per_kwh": 0.01408,
+            "bundled_illustrative_usd_per_kwh": 0.09449,
+            "source": "bge-sos-suppl751"
+          }
+        },
+        "winter": {
+          "months": [10, 11, 12, 1, 2, 3, 4, 5],
+          "on_peak": {
+            "generation_usd_per_kwh": 0.19860,
+            "transmission_usd_per_kwh": 0.05330,
+            "bundled_illustrative_usd_per_kwh": 0.25190,
+            "source": "bge-sos-suppl751",
+            "label": "Oct 2026–May 2027 SOS Suppl."
+          },
+          "intermediate": {
+            "generation_usd_per_kwh": 0.11065,
+            "transmission_usd_per_kwh": 0.01210,
+            "bundled_illustrative_usd_per_kwh": 0.12275,
+            "source": "bge-sos-suppl751"
+          },
+          "off_peak": {
+            "generation_usd_per_kwh": 0.10377,
+            "transmission_usd_per_kwh": 0.01210,
+            "bundled_illustrative_usd_per_kwh": 0.11587,
+            "source": "bge-sos-suppl751"
+          }
+        }
+      },
+      "example_load_split": {
+        "label": "EXAMPLE weekday load split for Millersville home (not measured)",
+        "summer": { "on_peak": 0.38, "intermediate": 0.22, "off_peak": 0.40 },
+        "winter": { "on_peak": 0.32, "intermediate": 0.28, "off_peak": 0.40 }
+      }
+    }
+  ],
+  "net_metering": {
+    "label": "Maryland net energy metering (high-level EXAMPLE)",
+    "export_credit": "full retail credit up to annual generation ≈ annual load (verify current MD rules)",
+    "source_note": "Policy summary only — not legal advice; mark assumptions EXAMPLE in UI"
+  }
+}

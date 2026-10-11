@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Powerwall &amp; Solar Payback · Millersville MD EXAMPLE</title>
+<meta name="theme-color" content="#07140f">
+<meta name="description" content="BGE TOU vs flat plan calculator with solar + battery payback and outage cover. EXAMPLE Millersville home — not a real bill.">
+<style>/*__CSS__*/</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <div class="orb orb-sun"></div>
+  <div class="orb orb-bat"></div>
+  <div class="grid-fade"></div>
+</div>
+
+<header class="top">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 48 48" width="42" height="42">
+        <defs>
+          <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#34d399"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="44" height="44" rx="12" fill="#0a1a14" stroke="url(#sg)" stroke-width="2"/>
+        <path d="M24 10 L28 20 H36 L30 26 L32 36 L24 30 L16 36 L18 26 L12 20 H20 Z" fill="url(#sg)" opacity=".95"/>
+        <rect x="14" y="34" width="20" height="6" rx="2" fill="#34d399" opacity=".7"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Powerwall &amp; Solar Payback</h1>
+      <p class="tag">BGE plans · battery + PV sizing · Millersville MD EXAMPLE (not a real bill)</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <span class="pill warn" title="Defaults are labeled EXAMPLE — never Boyd's actual bill">EXAMPLE home</span>
+    <span class="pill" id="planPill">Schedule R</span>
+    <span class="pill ok" id="paybackPill">— yr payback</span>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Calculator screens">
+  <button class="tab active" data-view="home" role="tab" aria-selected="true">⚡ Calculator</button>
+  <button class="tab" data-view="charts" role="tab" aria-selected="false">📈 Charts</button>
+  <button class="tab" data-view="outage" role="tab" aria-selected="false">🔋 Outage</button>
+  <button class="tab" data-view="plans" role="tab" aria-selected="false">📋 Plans</button>
+  <button class="tab" data-view="about" role="tab" aria-selected="false">ℹ️ About</button>
+</nav>
+
+<main>
+  <!-- HOME / CALCULATOR -->
+  <section id="view-home" class="view active" role="tabpanel">
+    <div class="banner warn-banner">
+      <strong>EXAMPLE only.</strong> Defaults model a generic Millersville MD home — <em>not</em> Boyd’s real BGE bill, usage, or quotes. Rate figures are public tariff snapshots; equipment costs are labeled EXAMPLE.
+    </div>
+
+    <div class="layout-2">
+      <div class="panel inputs">
+        <div class="panel-head">
+          <h2>System inputs</h2>
+          <p class="hint">Adjust sliders · results update live</p>
+        </div>
+
+        <label class="field">
+          <span class="lbl">Home size <small>(sq ft · EXAMPLE)</small></span>
+          <div class="row">
+            <input type="range" id="sqft" min="1200" max="4500" step="50" value="2400">
+            <output id="sqftOut">2400</output>
+          </div>
+        </label>
+
+        <label class="field">
+          <span class="lbl">Monthly usage <small>(kWh · EXAMPLE Millersville)</small></span>
+          <div class="row">
+            <input type="range" id="monthlyKwh" min="400" max="2500" step="25" value="1100">
+            <output id="monthlyKwhOut">1100</output>
+          </div>
+        </label>
+
+        <label class="field">
+          <span class="lbl">Solar array <small>(kW DC)</small></span>
+          <div class="row">
+            <input type="range" id="solarKw" min="0" max="20" step="0.5" value="8">
+            <output id="solarKwOut">8.0</output>
+          </div>
+        </label>
+
+        <label class="field">
+          <span class="lbl">Powerwall count <small>(≈13.5 kWh each · EXAMPLE)</small></span>
+          <div class="row">
+            <input type="range" id="pwCount" min="0" max="4" step="1" value="1">
+            <output id="pwCountOut">1</output>
+          </div>
+        </label>
+
+        <label class="field">
+          <span class="lbl">BGE rate plan</span>
+          <select id="ratePlan"></select>
+        </label>
+
+        <label class="field">
+          <span class="lbl">Critical load when islanded <small>(kW · EXAMPLE)</small></span>
+          <div class="row">
+            <input type="range" id="criticalKw" min="0.5" max="8" step="0.25" value="2">
+            <output id="criticalKwOut">2.0</output>
+          </div>
+        </label>
+
+        <div class="chk-row">
+          <label class="chk"><input type="checkbox" id="applyItc" checked> Apply EXAMPLE 30% federal ITC</label>
+          <label class="chk"><input type="checkbox" id="shiftTou" checked> Battery shifts load off peak (TOU)</label>
+        </div>
+
+        <button type="button" class="btn ghost" id="btnReset">Reset to EXAMPLE defaults</button>
+      </div>
+
+      <div class="results-col">
+        <div class="kpi-grid" id="kpiGrid">
+          <!-- filled by JS -->
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Annual bill snapshot</h2>
+            <p class="hint">Before vs after solar + battery · illustrative</p>
+          </div>
+          <div class="bill-bars" id="billBars"></div>
+          <p class="fine" id="billNote"></p>
+        </div>
+
+        <div class="panel tip-panel">
+          <h3>Quick read</h3>
+          <p id="quickRead">—</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHARTS -->
+  <section id="view-charts" class="view" role="tabpanel" hidden>
+    <div class="layout-2">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Payback years</h2>
+          <p class="hint">Cumulative net savings vs system cost</p>
+        </div>
+        <div class="chart-wrap" id="paybackChart"></div>
+        <p class="fine" id="paybackNote"></p>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Bill savings by year</h2>
+          <p class="hint">Estimated annual $ saved (flat inflation EXAMPLE)</p>
+        </div>
+        <div class="chart-wrap" id="savingsChart"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Cost stack</h2>
+        <p class="hint">EXAMPLE installed cost · incentives · net</p>
+      </div>
+      <div class="cost-stack" id="costStack"></div>
+    </div>
+  </section>
+
+  <!-- OUTAGE -->
+  <section id="view-outage" class="view" role="tabpanel" hidden>
+    <div class="layout-2">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Outage hours covered</h2>
+          <p class="hint">Usable battery ÷ critical load · EXAMPLE</p>
+        </div>
+        <div class="outage-hero" id="outageHero"></div>
+        <div class="chart-wrap" id="outageChart"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Coverage scenarios</h2>
+          <p class="hint">How long at different critical loads</p>
+        </div>
+        <table class="data-table" id="outageTable">
+          <thead><tr><th>Critical load</th><th>Hours</th><th>Days</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p class="fine">Assumes full charge at outage start, no solar during storm, 90% round-trip efficiency already baked into usable kWh. Real runtime varies with weather and loads.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section id="view-plans" class="view" role="tabpanel" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>BGE plan comparison</h2>
+        <p class="hint">Public tariff snapshots · same EXAMPLE usage</p>
+      </div>
+      <div class="plan-cards" id="planCards"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Rate period reference (Schedule RL)</h2>
+        <p class="hint">From BGE Schedule RL tariff</p>
+      </div>
+      <div class="tou-grid" id="touGrid"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="view-about" class="view" role="tabpanel" hidden>
+    <div class="panel">
+      <div class="panel-head"><h2>About this calculator</h2></div>
+      <p>TokenMax burn-pool build for Boyd — a local, offline-friendly tool to explore <strong>solar + Powerwall-class battery</strong> payback under BGE Schedule R vs Schedule RL (optional TOU). No Green Button, no account login, no real bills ingested.</p>
+      <ul class="about-list">
+        <li>Defaults are labeled <strong>EXAMPLE Millersville MD home</strong> — never presented as Boyd’s actual usage or cost.</li>
+        <li>Rate numbers come from public Maryland OPC / BGE tariff &amp; SOS filings where verified; anything estimated is marked <strong>EXAMPLE</strong>.</li>
+        <li>Equipment $/W and $/battery are EXAMPLE ballparks for illustration only.</li>
+        <li>Hash routes: <code>#home</code> <code>#charts</code> <code>#outage</code> <code>#plans</code> <code>#about</code></li>
+      </ul>
+      <h3>Sources</h3>
+      <ul class="src-list" id="srcList"></ul>
+      <p class="fine">Not financial, legal, or engineering advice. Confirm current BGE rates, MD net metering, and installer quotes before any purchase.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Powerwall &amp; Solar Payback · TokenMax · port 4312</span>
+  <span id="footMeta">offline-ready</span>
+</footer>
+
+<script>
+window.__RATES__ = /*__RATES__*/ null /*__/RATES__*/;
+</script>
+<script>/*__APP__*/</script>
+</body>
+</html>

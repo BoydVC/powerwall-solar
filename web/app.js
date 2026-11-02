@@ -520,3 +520,10 @@
   renderAll();
   showView(location.hash.replace(/^#/, "") || "home");
 })();
+
+/* First-Run Lab fix: one obvious primary action that takes a first-time user to the first control */
+(function(){function go(){if(document.querySelector('.frl-cta'))return;var h=document.querySelector('main')||document.querySelector('h1');if(!h)return;
+var b=document.createElement('button');b.type='button';b.className='frl-cta';b.textContent='Calculate my payback';
+b.addEventListener('click',function(){var t=[].slice.call(document.querySelectorAll('main input,main select,main textarea')).filter(function(e){return e.offsetParent})[0];if(t){t.scrollIntoView({block:'center'});t.focus();}n+=1;st.textContent=t?'Step 1 is highlighted below ('+n+')':'Ready ('+n+')';});var n=0,st=document.createElement('span');st.className='frl-cta-status';st.setAttribute('role','status');
+h.insertAdjacentElement('afterend',b);b.insertAdjacentElement('afterend',st);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();

@@ -265,3 +265,10 @@ code {
   background: rgba(7,20,15,.92); border-top: 1px solid rgba(52,211,153,.12);
   backdrop-filter: blur(8px);
 }
+
+/* First-Run Lab fix: WCAG 2.5.8 tap targets (24px minimum, 44px rows on phones) */
+input[type=checkbox],input[type=radio]{width:26px;height:26px;min-width:26px;min-height:26px;flex:none}
+input[type=range]{min-height:28px}
+label:has(> input[type=checkbox]),label:has(> input[type=radio]){display:flex;align-items:center;gap:.5em;min-height:44px}
+.frl-cta{min-height:44px;padding:10px 16px;margin:8px 0;font:inherit;font-weight:700;border-radius:10px;cursor:pointer}
+.frl-cta:focus-visible{outline:3px solid currentColor;outline-offset:2px}

@@ -1,8 +1,8 @@
 {
   "meta": {
     "title": "BGE residential rate figures for calculator",
-    "disclaimer": "Illustrative public tariff figures for a Millersville MD EXAMPLE home. NOT Boyd's actual bill. Rates change; verify on bge.com / PSC Md. before any decision.",
-    "region": "BGE service territory · Anne Arundel / Millersville MD",
+    "disclaimer": "Illustrative public tariff figures for a Lakeside MD EXAMPLE home. NOT Alex's actual bill. Rates change; verify on bge.com / PSC Md. before any decision.",
+    "region": "BGE service territory · Anne Arundel / Lakeside MD",
     "currency": "USD",
     "units": "kWh",
     "compiled_at": "2026-10-11",
@@ -34,7 +34,7 @@
     ]
   },
   "example_home": {
-    "label": "EXAMPLE Millersville MD home (not Boyd's real bill)",
+    "label": "EXAMPLE Lakeside MD home (not Alex's real bill)",
     "sqft": 2400,
     "monthly_kwh": 1100,
     "annual_kwh": 13200,
@@ -44,7 +44,7 @@
     "notes": "Rough Anne Arundel single-family EXAMPLE usage for calculator defaults only."
   },
   "hardware_examples": {
-    "disclaimer": "Equipment prices are EXAMPLE retail/install ballparks — not quotes, not Boyd's quotes.",
+    "disclaimer": "Equipment prices are EXAMPLE retail/install ballparks — not quotes, not Alex's quotes.",
     "powerwall": {
       "name": "Tesla Powerwall-class battery (EXAMPLE)",
       "usable_kwh": 13.5,
@@ -177,7 +177,7 @@
         }
       },
       "example_load_split": {
-        "label": "EXAMPLE weekday load split for Millersville home (not measured)",
+        "label": "EXAMPLE weekday load split for Lakeside home (not measured)",
         "summer": { "on_peak": 0.38, "intermediate": 0.22, "off_peak": 0.40 },
         "winter": { "on_peak": 0.32, "intermediate": 0.28, "off_peak": 0.40 }
       }

@@ -1,8 +1,8 @@
 # Powerwall & Solar Payback
 
-BGE time-of-use vs flat plan calculator with solar + Powerwall-class battery sizing, bill savings, payback charts, and outage-hour cover for a **Millersville MD EXAMPLE home**.
+BGE time-of-use vs flat plan calculator with solar + Powerwall-class battery sizing, bill savings, payback charts, and outage-hour cover for a **Lakeside MD EXAMPLE home**.
 
-TokenMax burn build — local only. **Not Boyd’s real bill.** No Green Button, no account login.
+TokenMax burn build — local only. **Not Alex’s real bill.** No Green Button, no account login.
 
 ## Screens
 
@@ -34,6 +34,6 @@ Offline single file: `dist/powerwall-solar.html`
 
 ---
 ## Repo notes
-- **Built:** Oct 2026 (TokenMax build week; see SHORTLIST/ledger), by TokenMax (Boyd's Grok Bot) on the Grok Bot box.
+- **Built:** Oct 2026 (TokenMax build week; see SHORTLIST/ledger), by TokenMax (Alex's Grok Bot) on the Grok Bot box.
 - **Run:** `./run.sh` (then open the localhost URL it prints).
 - Imported from `/workspace/tokenmax/powerwall-solar` on Oct 23, 2026. node_modules, virtualenvs, logs and files over 20 MB were left out.
